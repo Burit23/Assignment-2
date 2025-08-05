@@ -1,0 +1,88 @@
+class Product:
+    def __init__(self, name, quantity):
+        self.name = name
+        self.quantity = quantity
+
+class OnlineShop:
+    def __init__(self, name="Gadget World", url="www.gadgetworld.com"):
+        self.name = name
+        self.url = url
+        self.__products = []  # Private attribute for encapsulation
+
+    def add_product(self, name, quantity):
+        product = Product(name, quantity)
+        self.__products.append(product)
+        print(f"Added {name} with quantity {quantity} to {self.name}.")
+
+    def remove_product(self, name):
+        for product in self.__products:
+            if product.name.lower() == name.lower():
+                self.__products.remove(product)
+                print(f"Removed {name} from {self.name}.")
+                return
+        print(f"Product {name} not found in {self.name}.")
+
+    def update_quantity(self, name, quantity):
+        for product in self.__products:
+            if product.name.lower() == name.lower():
+                product.quantity = quantity
+                print(f"Updated {name} to quantity {quantity} in {self.name}.")
+                return
+        print(f"Product {name} not found in {self.name}.")
+
+    def show_products(self):
+        if not self.__products:
+            print(f"No products in {self.name}.")
+        else:
+            print(f"Products in {self.name} ({self.url}):")
+            for product in self.__products:
+                print(f"- {product.name}: {product.quantity} units")
+
+def manage_online_shop():
+    shop = OnlineShop()
+    while True:
+        print("\n=== Online Shop Management ===")
+        print("1. Add product")
+        print("2. Remove product")
+        print("3. Update quantity")
+        print("4. Show products")
+        print("5. Exit")
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == '1':
+            name = input("Enter product name: ")
+            try:
+                quantity = int(input("Enter product quantity: "))
+                if quantity < 0:
+                    print("Quantity cannot be negative. Please try again.")
+                    continue
+                shop.add_product(name, quantity)
+            except ValueError:
+                print("Invalid quantity. Please enter a valid number.")
+
+        elif choice == '2':
+            name = input("Enter product name to remove: ")
+            shop.remove_product(name)
+
+        elif choice == '3':
+            name = input("Enter product name to update: ")
+            try:
+                quantity = int(input("Enter new quantity: "))
+                if quantity < 0:
+                    print("Quantity cannot be negative. Please try again.")
+                    continue
+                shop.update_quantity(name, quantity)
+            except ValueError:
+                print("Invalid quantity. Please enter a valid number.")
+
+        elif choice == '4':
+            shop.show_products()
+
+        elif choice == '5':
+            print("Exiting Online Shop Management.")
+            break
+
+        else:
+            print("Invalid choice. Please select 1-5.")
+
+manage_online_shop()
