@@ -1,4 +1,4 @@
-# ส่วนที่ 3: ระบบร้านค้าออนไลน์ (Customer)
+# ส่วนที่ 3: ระบบร้านค้าออนไลน์
 class Product:
     def __init__(self, name, quantity):
         self.name = name
